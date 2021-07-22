@@ -1,14 +1,22 @@
 <apex:page controller="CSVLoaderController">
-  
-  <h1>CSV Loader</h1>
-  <p>Choose a CSV File to import</p>
 
   <apex:form>
-    <apex:pageBlock >
+    <apex:pageBlock title="CSV Loader" >
+      <p>Choose a CSV File to import</p>
+
       <apex:pageBlockSection columns="4"> 
         <apex:inputFile value="{!csvFile}"  filename="{!csvAsString}"/>
-        <apex:commandButton value="Import CSV" action="{!importCSVFile}"/>
+        <apex:commandButton value="Load CSV records" action="{!importCSVFile}"/>
+        <apex:commandButton value="Insert new records" action="{!insertNewRecords}"/>
       </apex:pageBlockSection>
+    </apex:pageBlock>
+
+    <apex:pagemessages />
+
+    <apex:pageBlock >
+      <apex:pageblocktable value="{!newCases}" var="case">
+        <apex:column value="{!case.Subject}" />
+      </apex:pageblocktable>
     </apex:pageBlock>
   </apex:form>
 
