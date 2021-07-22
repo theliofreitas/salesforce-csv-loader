@@ -27,7 +27,6 @@ public with sharing class CSVLoaderController {
 
         // Check if the CSV header columns exists as fields in the target SObject
         if(!checkHeaderColumns(header)) {
-            addPageError('Invalid column field on the header');
             return;
         }
 
@@ -47,7 +46,7 @@ public with sharing class CSVLoaderController {
 
                 newCases.add(newCase);
             } else {
-                addPageError('The number of columns in the row "' + row + '" is different from the header of the file.');
+                addPageMessage('The number of columns in the row "' + row + '" is different from the header of the file.', true);
             }
         }
     }
@@ -56,8 +55,11 @@ public with sharing class CSVLoaderController {
         if (!newCases.isEmpty()) {
             try {
                 insert newCases;
+
+                addPageMessage('Records created successfully', false);
+                clearImportedRecords();
             } catch (Exception e) {
-                addPageError(e.getMessage());
+                addPageMessage(e.getMessage(), true);
             }
         }
     }
@@ -77,6 +79,8 @@ public with sharing class CSVLoaderController {
 
         for (String column : header) {
             if(fieldMap.get(column.toLowerCase()) == null) {
+                addPageMessage('Invalid column field "' + column + '" on the header', true);
+
                 return false;
             }
         }
@@ -84,9 +88,16 @@ public with sharing class CSVLoaderController {
         return true;
     }
 
-    // Helper method to add error messages on the Visualforce page
-    private void addPageError(String errorMessage) {
-        ApexPages.Message pageErrorMessage = new ApexPages.Message(ApexPages.severity.ERROR, errorMessage);
-        ApexPages.addMessage(pageErrorMessage);
+    // Helper method to add messages on the Visualforce page
+    private void addPageMessage(String message, Boolean isError) {
+        ApexPages.Message pageMessage;
+
+        if (isError) {
+            pageMessage = new ApexPages.Message(ApexPages.severity.ERROR, message);
+        }
+        else {
+            pageMessage = new ApexPages.Message(ApexPages.severity.CONFIRM, message);
+        }
+        ApexPages.addMessage(pageMessage);
     }
 }
