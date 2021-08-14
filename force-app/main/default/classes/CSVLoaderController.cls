@@ -16,6 +16,11 @@ public with sharing class CSVLoaderController {
     }
 
     public void importCSVFile() {
+        if (csvFile == null) {
+            addPageMessage('Select a CSV file before continue', true);
+            return;
+        }
+
         clearImportedRecords();
 
         csvAsString = csvFile.toString();
@@ -26,7 +31,7 @@ public with sharing class CSVLoaderController {
         String[] header = rows[0].split(splitColumnsRegex);
 
         // Check if the CSV header columns exists as fields in the target SObject
-        if(!checkHeaderColumns(header)) {
+        if (!checkHeaderColumns(header)) {
             return;
         }
 
@@ -78,7 +83,7 @@ public with sharing class CSVLoaderController {
         Map<String, Schema.SObjectField> fieldMap = targetType.getDescribe().fields.getMap();
 
         for (String column : header) {
-            if(fieldMap.get(column.toLowerCase()) == null) {
+            if (fieldMap.get(column.toLowerCase()) == null) {
                 addPageMessage('Invalid column field "' + column + '" on the header', true);
 
                 return false;

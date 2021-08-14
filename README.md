@@ -1,18 +1,49 @@
-# Salesforce DX Project: Next Steps
+# Salesforce CSV Loader
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+> A custom CSV loader in a Visualforce Page. ☁
 
-## How Do You Plan to Deploy Your Changes?
+## About
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+Sometimes we need customized solutions to meet our business needs, this CSV Loader make it easier for business users to upload records to Salesforce using CSV files without needing to know how to use tools like Workbench or install Dataloader!
 
-## Configure Your Salesforce DX Project
+## Getting Started
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+### Prerequisites
 
-## Read All About It
+If you haven't done it yet, setup your SFDX CLI:
+ - [Salesforce CLI Instalation](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm)
+ - [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+### Setting up this project
+1. Clone this repo:
+    ```sh
+    git clone https://github.com/theliofreitas/salesforce-csv-loader.git
+    ```
+    
+2. Create your Scratch Org
+In the project's root folder, use the following command:
+    ```sh
+    sfdx force:org:create -f .\config\project-scratch-def.json -a yourScratchOrgName
+    ```
+
+3. Push the source code to the new Scratch Org
+    ```sh
+    sfdx force:source:push -u yourScratchOrgName
+    ```
+
+## Using the CSV Loader
+
+Open your new scratch org using the following command:
+```sh
+sfdx force:org:open -u yourScratchOrgName
+```
+
+In the Settings > Visualforce pages, open the **CSV Loader** and there it is! You can test and modify the code according to your business scenarios. 😃
+
+
+## To Do List
+
+- [x] CSV Loader
+- [x] Error handling
+- [ ] Test classes
+- [ ] Dynamic objects
